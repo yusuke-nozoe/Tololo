@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'tololo#index'
   resources :tololo, only: [:index, :update] do
     collection do
-      get :list
+      get :lists
     end
   end
 

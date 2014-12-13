@@ -2,9 +2,9 @@ class TololoController < ApplicationController
   def index
   end
   
-  def list
-    @list = List.all
-    render :json => { :list => @list.to_json(:include => :cards) }
+  def lists
+    @lists = List.all
+    render :json => { :lists => @lists.to_json(:include => :cards) }
   end
 
   def update
