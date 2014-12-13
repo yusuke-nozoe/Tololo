@@ -1,8 +1,9 @@
 <div class="row" data-bind="foreach: lists">
   <div class="col-md-4">
     <h2 data-bind="text: name"></h3>
-    <div class="sortContainer" data-bind="foreach: cards, sortableList: cards">
-      <div class="well" data-bind="text: content, sortableItem: { item: $data, parentList: $parent.cards }"></div>
+    <div class="sortContainer" data-bind="foreach: cards, sortableList: $data">
+      <div class="well" data-bind="text: content, 
+        sortableItem: { item: $data, parentList: $parent.cards }"></div>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 class TololoController < ApplicationController
+  protect_from_forgery except: [:update]
   def index
   end
   

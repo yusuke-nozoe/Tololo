@@ -9,8 +9,6 @@ $ ->
       $(element).data("sortItem", options.item)
       $(element).data("parentList", options.parentList)
   }
-  
-  #connect items with observableArrays
   ko.bindingHandlers.sortableList = {
     init: (element, valueAccessor, allBindingsAccessor, viewModel, context) ->
       $(element).data("sortList", valueAccessor()) #attach meta-data
@@ -18,8 +16,8 @@ $ ->
         connectWith: '.sortContainer',
         update: (event, ui) ->
           item = ui.item.data("sortItem")
-          return false if item.content == ''
           if (item) 
+            return false if item.content == ''
             #identify parents
             originalParent = ui.item.data("parentList")
             newParent = ui.item.parent().data("sortList")
@@ -27,13 +25,21 @@ $ ->
             position = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0])
             if (position >= 0) 
               originalParent.remove(item)
-              newParent.splice(position, 0, item)
+              newParent.cards.splice(position, 0, item)
             ui.item.remove()
+            $.ajax({
+              type: 'PUT', url: '/tololo/' + item.id, contentType: 'application/json',
+              data: ko.toJSON({
+                card: { list_id: newParent.id }
+              }),
+              success: (result) -> console.log result
+            })
       })
   }
   class List
     constructor: (data) ->
       self = this
+      self.id  = data.id
       self.name  = data.name
       self.cards = ko.observableArray(if data.cards.length > 0 then data.cards else [{content: ''}])
 
